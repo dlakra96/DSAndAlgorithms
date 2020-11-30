@@ -9,7 +9,7 @@ public class BinarySearch implements SearchAlgorithm {
 	
 	}
 
-	static <T extends Comparable<T>> int binarySearch(T[] arr,T key,int start,int end)
+   <T extends Comparable<T>> int binarySearch(T[] arr,T key,int start,int end)
 	{
 		if(start > end)
 		{
