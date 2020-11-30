@@ -1,4 +1,4 @@
-package search;
+package com.deepanshu.dsproject.search;
 
 public class TernarySearch implements SearchAlgorithm {
 

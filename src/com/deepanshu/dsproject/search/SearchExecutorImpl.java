@@ -1,4 +1,4 @@
-package search;
+package com.deepanshu.dsproject.search;
 
 import java.util.Arrays;
 import java.util.Random;
