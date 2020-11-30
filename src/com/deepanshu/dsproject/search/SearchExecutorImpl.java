@@ -20,10 +20,10 @@ public class SearchExecutorImpl {
 		Integer[] integers = Stream.generate(() -> r.nextInt(maxElement)).limit(size).sorted().toArray(Integer[]::new);
 		Integer searchValue = integers[r.nextInt(size-1)];
 		Callable<Integer> ternaryCallable = () -> {
-			return TernarySearch.ternarySearch(integers, searchValue, 0, size-1);
+			return (new TernarySearch()).find(integers, searchValue);
 		};
 		Callable<Integer> binaryCallable = () -> {
-			return BinarySearch.binarySearch(integers, searchValue, 0, size-1);
+			return (new BinarySearch()).find(integers, searchValue);
 		};
 		
 		System.out.println("Array Size :- " + size);

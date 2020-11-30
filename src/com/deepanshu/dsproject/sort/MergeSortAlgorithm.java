@@ -2,7 +2,7 @@ package com.deepanshu.dsproject.sort;
 
 public class MergeSortAlgorithm implements SortAlgorithm {
 
-	void merge(int[] array, int start, int mid, int end)
+	void merge(Integer[] array, int start, int mid, int end)
 	{
 		int size1 = mid - start + 1;
 		int size2 = end - mid;
@@ -45,7 +45,7 @@ public class MergeSortAlgorithm implements SortAlgorithm {
 	
 	
 	@Override
-	public void sort(int[] arrayToBeSorted, int start, int end) {
+	public void sort(Integer[] arrayToBeSorted, int start, int end) {
 		if(start < end)
 		{
 			int mid = start + (end-start)/2;

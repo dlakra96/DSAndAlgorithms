@@ -2,44 +2,45 @@ package com.deepanshu.dsproject.sort;
 
 public class HeapSortAlgorithm implements SortAlgorithm {
 
-	void heapify(int[] arrayToBeSorted,int n,int i)
+	void heapify(Integer[] arrayToBeSorted,int n,int i)
 	{
-		int min = i;
+		int max = i;
 		int left = 2*i + 1;
 		int right = 2*i + 2;
-		if(left <= n && arrayToBeSorted[left] < arrayToBeSorted[min])
-			min = left;
-		if(right <= n && arrayToBeSorted[right] < arrayToBeSorted[min])
-			min = right;
-		if(min != i)
+		if(left < n && arrayToBeSorted[left] > arrayToBeSorted[max])
+			max = left;
+		if(right < n && arrayToBeSorted[right] > arrayToBeSorted[max])
+			max = right;
+		if(max != i)
 		{
-			int temp = arrayToBeSorted[min];
-			arrayToBeSorted[min] = arrayToBeSorted[i];
-			arrayToBeSorted[i] = temp;
-			heapify(arrayToBeSorted,n,min);
+			swap(arrayToBeSorted,max,i);
+			heapify(arrayToBeSorted,n,max);
 		}
 	}
 	
-	void buildMinHeap(int[] arrayToBeSorted)
+	void buildMaxHeap(Integer[] arrayToBeSorted)
 	{
 		int len = arrayToBeSorted.length;
 		for(int i = len/2 - 1; i>=0; i--)
-			heapify(arrayToBeSorted,len-1,i);
+			heapify(arrayToBeSorted,len,i);
 	}
 	
-	void swap(int arr[], int i, int j)
+	void swap(Integer arr[], int i, int j)
 	{
-		
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
 	}
 	
 	@Override
-	public void sort(int[] arrayToBeSorted, int start, int end) {
+	public void sort(Integer[] arrayToBeSorted, int start, int end) {
 		
-		buildMinHeap(arrayToBeSorted);
+		buildMaxHeap(arrayToBeSorted);
 		
-		for(int i = arrayToBeSorted.length - 1; i>0; i--)
+		for(int i = end; i>0; i--)
 		{
-		//	int t
+			swap(arrayToBeSorted,i,0);
+			heapify(arrayToBeSorted,i,0);
 		}
 	
 	}

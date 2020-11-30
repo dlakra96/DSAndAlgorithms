@@ -9,7 +9,7 @@ public class TernarySearch implements SearchAlgorithm {
 	
 	}
 	
-	static <T extends Comparable<T>> int ternarySearch(T[] arr, T key, int start, int end)
+	<T extends Comparable<T>> int ternarySearch(T[] arr, T key, int start, int end)
 	{
 		if(start > end)
 		{
