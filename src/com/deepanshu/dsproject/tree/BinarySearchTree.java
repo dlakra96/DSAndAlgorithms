@@ -103,13 +103,53 @@ public class BinarySearchTree {
 			 */ 
 			else if(nodeToRemove.leftChild != null && nodeToRemove.rightChild != null)
 			{
-					return false;
+				Node successor = findInorderSuccessor(nodeToRemove);
+				
+				successor.leftChild = nodeToRemove.leftChild;
+				nodeToRemove.leftChild.parent = successor;
+				
+				if(nodeToRemove.rightChild != successor)
+				{
+					if(successor.rightChild != null)
+					{
+						successor.rightChild.parent = successor.parent;
+						successor.parent.leftChild = successor.rightChild;
+					}
+					else
+						successor.parent.leftChild = null;
+					
+					successor.rightChild = nodeToRemove.rightChild;
+					successor.rightChild.parent = successor;
+				}
+				
+				if(nodeToRemove == root)
+				{
+					successor.parent = null;
+					root = successor;
+				}
+				else
+				{
+					if(nodeToRemove.parent.data < successor.data)
+						nodeToRemove.parent.rightChild = successor;
+					else
+						nodeToRemove.parent.leftChild = successor;
+					
+					successor.parent = nodeToRemove.parent;
+				}
+				
+				return false;
 			}
 			// case 3 : when we have either leftChild or rightChild is present
 			else
 			{
 				if(nodeToRemove.rightChild != null)
 				{
+					if(nodeToRemove == root)
+					{
+						root = nodeToRemove.rightChild;
+						return true;
+					}
+					
 					nodeToRemove.rightChild.parent = nodeToRemove.parent;
 					
 					// now we will decide whether the right subtree of node to be deleted will become left subtree of its parent or right subtree of its parent
@@ -121,6 +161,12 @@ public class BinarySearchTree {
 				}
 				else
 				{
+					if(nodeToRemove == root)
+					{
+						root = nodeToRemove.leftChild;
+						return true;
+					}
+					
 					nodeToRemove.leftChild.parent = nodeToRemove.parent;
 					
 					// now we will decide whether the left subtree of the node to be deleted will become left subtree of its parent or right subtree of its parent
@@ -134,5 +180,18 @@ public class BinarySearchTree {
 			}
 		}
 		
+	}
+	
+	public Node findInorderSuccessor(Node node)
+	{
+		if(node.rightChild == null)
+			return node;
+		else
+			node = node.rightChild;
+		
+		while(node.leftChild != null)
+			node = node.leftChild;
+		
+		return node;
 	}
 }
