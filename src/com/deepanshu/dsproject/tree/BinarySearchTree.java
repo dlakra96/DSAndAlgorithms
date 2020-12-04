@@ -194,4 +194,36 @@ public class BinarySearchTree {
 		
 		return node;
 	}
+	
+	public Node getRoot() {
+		return root;
+	}
+
+	public void printInOrder(Node temp)
+	{
+		if(temp == null)
+			return;
+		printInOrder(temp.leftChild);
+		System.out.print(temp.data + " ");
+		printInOrder(temp.rightChild);
+		
+	}
+	
+	public void printPostOrder(Node temp)
+	{
+		if(temp == null)
+			return;
+		printPostOrder(temp.leftChild);
+		printPostOrder(temp.rightChild);
+		System.out.print(temp.data + " ");
+	}
+	
+	public void printPreOrder(Node temp)
+	{
+		if(temp == null)
+			return;
+		System.out.print(temp.data + " ");
+		printPreOrder(temp.leftChild);
+		printPreOrder(temp.rightChild);
+	}
 }
