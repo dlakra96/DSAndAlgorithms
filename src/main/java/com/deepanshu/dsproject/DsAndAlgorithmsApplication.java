@@ -4,13 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-
-public class DSAndAlgorithmsApplication {
+public class DsAndAlgorithmsApplication {
 
 	public static void main(String[] args) {
-		
-		SpringApplication.run(DSAndAlgorithmsApplication.class, args);
-
+		SpringApplication.run(DsAndAlgorithmsApplication.class, args);
 	}
 
 }
