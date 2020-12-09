@@ -28,14 +28,14 @@ public class BinarySearchTree {
 	public Node findNode(int key)
 	{
 		Node temp = root;
-		while(temp != root)
+		while(temp != null)
 		{
 			if(key < temp.data)
 			{	
 				if(temp.leftChild == null) return temp;
 				temp = temp.leftChild;
 			}
-			if(key > temp.data)
+			else if(key > temp.data)
 			{
 				if(temp.rightChild == null) return temp;
 				temp = temp.rightChild;
@@ -44,6 +44,7 @@ public class BinarySearchTree {
 				return temp;
 		}
 		return null;
+		
 	}
 	
 	

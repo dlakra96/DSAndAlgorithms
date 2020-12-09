@@ -16,12 +16,11 @@ public class BSTImpl {
 		
 		do {
 			System.out.println("Enter node value(int) to be inserted in Binary Search Tree :-");
-			br.readLine();
 			bstTree.insertNode(Integer.parseInt(br.readLine()));
 			System.out.println("Node has been inserted successfully in BST");
 		    System.out.println("\nWant to add more nodes ? (y/n)");
 		}
-		while((char)br.read() =='y');
+		while(br.readLine().equalsIgnoreCase("y"));
 		
 		System.out.println("Choose tree representation for printing nodes on the console :- \n1. In-Order (default)\n2. Pre-Order\n3. Post-Order");
 		
@@ -41,6 +40,6 @@ public class BSTImpl {
 			e.printStackTrace();
 		}
 		
-		System.out.println("This program code is written by Deepanshu Lakra. Have a nice day !!!");
+		System.out.println("\n\n\nThis program code is written by Deepanshu Lakra. Have a nice day !!!");
 	}
 }
