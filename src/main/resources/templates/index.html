@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Hello</title>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-8">
+					<h2 class="text-center">Analysis Comparison of different Algorithms</h2>
+				</div>
+			</div>
+			
+			<div class="row mt-2">
+				<h4></h4>
+				<div class="col">
+				<form class="row row-cols-lg-auto g-3 align-items-center">
+					<div class="col-12">
+						<div class="form-floating">
+						  <input type="number" class="form-control" id="arraySize" placeholder="1" min="1">
+						  <label for="arraySize">Number of Elements</label>
+						</div>
+					</div>
+					<div class="col-12">
+						<button type="button" class="btn btn-primary">Fetch</button>
+					</div>
+				</form>
+				</div>
+			</div>
+			
+			<div class="row">
+				<h4>Search Algorithms</h4>
+				<div class="col">
+					<canvas id="searchAnalysis"></canvas>
+				</div>
+			</div>
+			
+			<div class="row">
+				<h4>Sort Algorithms</h4>
+				<div class="col-md-9">
+					<canvas id="sortAnalysis"></canvas>
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+			
+		</div>
+		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+		
+	</body>
+</html>
