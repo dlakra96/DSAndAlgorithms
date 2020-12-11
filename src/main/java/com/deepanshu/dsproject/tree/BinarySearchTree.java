@@ -1,5 +1,8 @@
 package com.deepanshu.dsproject.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BinarySearchTree {
 	
 	class Node{
@@ -227,4 +230,21 @@ public class BinarySearchTree {
 		printPreOrder(temp.leftChild);
 		printPreOrder(temp.rightChild);
 	}
+	
+	public void printlevelOrderTraversal(Node root)
+	{
+		Queue<Node> nodeQueue = new LinkedList<>();
+		nodeQueue.add(root);
+		
+		while(!nodeQueue.isEmpty())
+		{
+			Node tempNode = nodeQueue.poll();
+			System.out.print(tempNode.data + " ");
+			if(tempNode.leftChild != null)
+				nodeQueue.add(tempNode.leftChild);
+			if(tempNode.rightChild != null)
+				nodeQueue.add(tempNode.rightChild);
+		}
+	}
 }
+

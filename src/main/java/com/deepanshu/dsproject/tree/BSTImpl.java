@@ -22,7 +22,7 @@ public class BSTImpl {
 		}
 		while(br.readLine().equalsIgnoreCase("y"));
 		
-		System.out.println("Choose tree representation for printing nodes on the console :- \n1. In-Order (default)\n2. Pre-Order\n3. Post-Order");
+		System.out.println("Choose tree representation for printing nodes on the console :- \n1. In-Order (default)\n2. Pre-Order\n3. Post-Order\n4. Level-Order");
 		
 		char orderType = (char)br.read();
 		
@@ -31,6 +31,7 @@ public class BSTImpl {
 			case '1' : bstTree.printInOrder(bstTree.getRoot()); break;
 			case '2' : bstTree.printPreOrder(bstTree.getRoot()); break;
 			case '3' : bstTree.printPostOrder(bstTree.getRoot()); break;
+			case '4' : bstTree.printlevelOrderTraversal(bstTree.getRoot());; break;
 			default: bstTree.printInOrder(bstTree.getRoot()); break;
 		}
 		
