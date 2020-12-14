@@ -3,6 +3,7 @@ package com.deepanshu.dsproject.search;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -13,17 +14,29 @@ public class SearchExecutorImpl {
 	public static void main(String args[])
 	{
 		
-		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		ExecutorService executorService = Executors.newFixedThreadPool(2);
 		Random r = new Random();
 		int size = 1000;
 		int maxElement = 100000;
 		Integer[] integers = Stream.generate(() -> r.nextInt(maxElement)).limit(size).sorted().toArray(Integer[]::new);
+		
+		/* selecting random element from array only to perform binary and ternary search on array,so it will  
+		   ensure that we will successfully end up with element at the end of both binary and ternary search 
+		 		*/
 		Integer searchValue = integers[r.nextInt(size-1)];
-		Callable<Integer> ternaryCallable = () -> {
-			return (new TernarySearch()).find(integers, searchValue);
+		
+		Callable<Float> ternaryCallable = () -> {
+			long ternarySearchStartTime = System.nanoTime();
+			(new TernarySearch()).find(integers, searchValue);
+			long ternarySearchEndTime = System.nanoTime();
+			return (float)(ternarySearchEndTime - ternarySearchStartTime)/1000000000;
 		};
-		Callable<Integer> binaryCallable = () -> {
-			return (new BinarySearch()).find(integers, searchValue);
+		
+		Callable<Float> binaryCallable = () -> {
+			long binarySearchStartTime = System.nanoTime();
+			(new BinarySearch()).find(integers, searchValue);
+			long binarySearchEndTime = System.nanoTime();
+			return (float)(binarySearchEndTime - binarySearchStartTime)/1000000000;
 		};
 		
 		System.out.println("Array Size :- " + size);
@@ -31,23 +44,25 @@ public class SearchExecutorImpl {
 		Arrays.asList(integers).forEach(s -> System.out.print(s + "->"));
 		System.out.println("\nElement to search for :- " + searchValue);
 		
-		System.out.println(" :: Starting with execution of ternary search on array of random integers of size 1000 :: ");
+		System.out.println(" :: Starting with execution of ternary search and binary search on array of random integers of size 1000 in concurrent fashion:: ");
 		
-		long ternaryStartTime = System.nanoTime();
-		Future<Integer> ternaryFuture = executorService.submit(ternaryCallable);
-		while(!ternaryFuture.isDone());
-		long ternaryEndTime = System.nanoTime();
+		Future<Float> ternaryFuture = executorService.submit(ternaryCallable);
+		Future<Float> binaryFuture = executorService.submit(binaryCallable);
 		
-		System.out.println("Took(secs) :- " + (float)(ternaryEndTime - ternaryStartTime)/1000000000);
+		while(!ternaryFuture.isDone() || !binaryFuture.isDone());
 		
-		System.out.println(" :: Starting with execution of binary search on array of random integers of size 1000 :: ");
+		System.out.println("Done with the execution of both ternary and binary search. Following are the runitme of both algorithms :- ");
 		
-		long binaryStartTime = System.nanoTime();
-		Future<Integer> binaryFuture = executorService.submit(binaryCallable);
-		while(!binaryFuture.isDone());
-		long binaryEndTime = System.nanoTime();
+		try {
+			
+			System.out.println("Ternary Search took(secs) :- " + ternaryFuture.get());
+			System.out.println("Binary Search took(secs) :- " + binaryFuture.get());
+			
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		System.out.println("Took(secs) :- " + (float)(binaryEndTime - binaryStartTime)/1000000000);
 		
 		System.out.println("The program code has been written by Deepanshu Lakra. Have a nice day !!!");
 		
