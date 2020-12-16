@@ -246,5 +246,32 @@ public class BinarySearchTree {
 				nodeQueue.add(tempNode.rightChild);
 		}
 	}
+	
+	public int returnNumOfLeafNodes(Node root)
+	{
+		if(root == null) return 0;
+		return (root.leftChild == null && root.rightChild == null) ?  1 : (returnNumOfLeafNodes(root.leftChild) + returnNumOfLeafNodes(root.rightChild)); 
+	}
+	
+	public int returnNumOfNonLeafNodes(Node root)
+	{
+		if(root == null) return 0;
+		return (root.leftChild != null || root.rightChild != null) ? (1 + returnNumOfNonLeafNodes(root.leftChild) + returnNumOfNonLeafNodes(root.rightChild)): 0;
+	}
+	
+	// full nodes will be those nodes that will be having both left as well as right child
+	public int returnNumOfFullNodes(Node root)
+	{
+		if(root == null) return 0;
+		return (root.leftChild != null && root.rightChild != null) ? (1 + returnNumOfFullNodes(root.leftChild) + returnNumOfFullNodes(root.rightChild)) 
+																				: returnNumOfFullNodes(root.leftChild) + returnNumOfFullNodes(root.rightChild);
+	}
+	
+	public int returnHeightOfTree(Node root)
+	{
+		if(root == null || root.leftChild == null && root.rightChild == null) return 0;
+		return 1 + Math.max(returnHeightOfTree(root.leftChild), returnHeightOfTree(root.rightChild));
+			
+	}
 }
 
