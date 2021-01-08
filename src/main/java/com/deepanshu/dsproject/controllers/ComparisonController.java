@@ -1,5 +1,8 @@
 package com.deepanshu.dsproject.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,13 @@ public class ComparisonController {
 	public Object getComparisons(@PathVariable int number) {
 		log.info("Called getComparisons() using the getComparisons mapping");
 		log.info("number recieved is "+ number);
-		return null;
+		
+		Map<String, Map<String, Float>> data = new HashMap<String, Map<String,Float>>();
+		
+		data.put("search", comparisonService.getSearchingAlgorithmComparison(number));
+		data.put("sort", comparisonService.getSortingAlgorithmComparison(number));
+		
+		return data;
 	}
 	
 }

@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<title>Hello</title>
+		<title>Algorithm Analysis Using Java</title>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
 	</head>
 	<body>
 		<div class="container">
@@ -15,7 +16,7 @@
 				</div>
 			</div>
 			
-			<div class="row mt-2">
+			<div class="row my-2">
 				<h4></h4>
 				<div class="col">
 				<form class="row row-cols-lg-auto g-3 align-items-center">
@@ -26,7 +27,7 @@
 						</div>
 					</div>
 					<div class="col-12">
-						<button type="button" class="btn btn-primary">Fetch</button>
+						<button type="button" class="btn btn-primary" onclick="getSearchAnalysisData();">Fetch</button>
 					</div>
 				</form>
 				</div>
@@ -37,6 +38,7 @@
 				<div class="col">
 					<canvas id="searchAnalysis"></canvas>
 				</div>
+				<div class="col-md-3"></div>
 			</div>
 			
 			<div class="row">
@@ -50,7 +52,107 @@
 		</div>
 		
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
+		
+		<script>
+		 	window.chartColors = {
+			      red: 'rgb(255, 99, 132)',
+			      orange: 'rgb(255, 159, 64)',
+			      yellow: 'rgb(255, 205, 86)',
+			      green: 'rgb(75, 192, 192)',
+			      blue: 'rgb(54, 162, 235)',
+			      purple: 'rgb(153, 102, 255)',
+			      grey: 'rgb(201, 203, 207)'
+			};
+			const getDataFromAPI = async (url) => {
+			  const response = await fetch(url, {
+			    method: 'GET',
+			    // body: myBody, // string or object
+			    headers: {
+			      'Content-Type': 'application/json'
+			    }
+			  });
+			  //const myJson = 
+			  return  await response.json(); //extract JSON from the http response
+			  //return myJson;
+			}
+			function createSearchChart(data) {
+				var searchCtx = document.getElementById('searchAnalysis').getContext('2d');
+				var myLineChart = new Chart(searchCtx, {
+				    type: 'line',
+				    data: data,
+				    options: {
+						responsive: true,
+						plugins: {
+							title: {
+								display: true,
+								text: 'Searching Algorithm Analysis'
+							},
+							tooltip: {
+								mode: 'index'
+							}
+						},
+						scales: {
+							x: {
+								display: true,
+								scaleLabel: {
+									display: true
+								}
+							},
+							y: {
+								display: true,
+								scaleLabel: {
+									display: true,
+									labelString: 'Value'
+								},
+								suggestedMin: -10,
+								suggestedMax: 200
+							}
+						}
+					}
+				});
+			}
+			function createSortChart(data) {
+				var sortCtx = document.getElementById('sortAnalysis').getContext('2d');
+				var myLineChart = new Chart(sortCtx, {
+				    type: 'line',
+				    data: data //,
+				    //options: options
+				});
+			}
+			function getSearchAnalysisData() {
+				var number = document.getElementById("arraySize").value;
+				var data = getDataFromAPI("getComparisons/"+number);
+				data.then(function(d) {
+					console.log("Data received is", d);
+					if(d) {
+						createSearchChart(convertDataForChart(d.search));
+						createSortChart(convertDataForChart(d.sort));
+					}
+				});
+			}
+			
+			function convertDataForChart(data1){
+				//label, data, borderColor
+				let data = {};
+				
+				if(data1) {
+					let dataSet = [];
+					let count = 0;
+					for (const [key, value] of Object.entries(data1)) {
+						dataSet.push({
+							label: key,
+							data: value * 1000000,
+							borderColor: Object.values(window.chartColors)[count] 
+						});
+						count = count + 1;
+					}
+					data["datasets"] = dataSet;
+				}
+				console.log(data);
+				return data;
+			}
+		</script>
 		
 	</body>
 </html>
